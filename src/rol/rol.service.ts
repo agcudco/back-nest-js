@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Rol } from "./rol.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -13,12 +13,19 @@ export class RolService {
 
 
     findAll(): Promise<Rol[]> {
-        return this.rolRepository.find();
+        return this.rolRepository.find({ relations: ['usuarios'] });
     }
 
     //buscar por id
-    findOne(id: number): Promise<Rol | null> {
-        return this.rolRepository.findOne({ where: { id } });
+    async findOne(id: number): Promise<Rol> {
+        const tmpRol = await this.rolRepository.findOne({
+            where: { id },
+            relations: ['usuarios']
+        });
+        if (!tmpRol) {
+            throw new NotFoundException(`No existe el rol con id: ${id}`);
+        }
+        return tmpRol;
     }
 
     //crear

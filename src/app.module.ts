@@ -4,6 +4,7 @@ import { Rol } from './rol/rol.entity';
 import { RolModule } from './rol/rol.module';
 import { ProyectoModule } from './proyecto/proyecto.module';
 import { TareaModule } from './tarea/tarea.module';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { TareaModule } from './tarea/tarea.module';
     }),
     RolModule,
     ProyectoModule,
-    TareaModule
+    TareaModule,
+    UsuarioModule
   ]
 })
 export class AppModule { }

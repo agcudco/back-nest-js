@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Usuario } from "src/usuario/usuario.entity";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'rol' })
 export class Rol {
@@ -9,7 +10,7 @@ export class Rol {
     @Column()
     nombre: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     descripcion?: string;
 
     @CreateDateColumn()
@@ -17,4 +18,8 @@ export class Rol {
 
     @UpdateDateColumn()
     actualizadoEn: Date;
+
+    @ManyToMany(() => Usuario, (usuario) => usuario.roles)
+    @JoinTable({ name: 'rol_usuario' })
+    usuarios: Usuario[];
 }
